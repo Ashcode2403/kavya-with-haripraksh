@@ -23,9 +23,7 @@
       <div class="opening-subtext">Wedding Invitation</div>
     </div>
   </div>
-<audio id="bg-music" loop>
-    <source src="Marriage At 2AM (Background Score).mp3" type="audio/mpeg">
-</audio>
+<audio id="bg-music" src="Marriage At 2AM (Background Score).mp3" loop preload="auto"></audio>
   <!-- Main site -->
 <div class="main-site" id="mainSite">
 
@@ -70,7 +68,7 @@
 
         <div class="invitation-card">
           <p style="font-size: 18px; margin-bottom: 14px; color: var(--gold);">
-            We joyfully invite you to the wedding of our beloved daughter
+            With hearts entwined in love, we invite you to witness the beginning of our forever
           </p>
         </div>
       </div>
@@ -174,27 +172,22 @@
       <div class="photo-card">
         <img src="images/WhatsApp Image 2026-04-23 at 12.54.48 PM.jpeg" alt="Couple Photo 2">
       </div>
+
+      <div class="photo-card">
+        <img src="images/WhatsApp Image 2026-04-23 at 9.39.10 PM.jpeg" alt="Couple Photo 2">
+      </div>
     </div>
   </div>
 </section>
     <!-- Families -->
-    <section>
-      <div class="container">
-        <h2 class="section-title">Families</h2>
 
-        <p class="section-subtitle">
-          With best compliments from:
-          Rohan, Vijesh, Padhas, Nadhas, Remya Manoj
-        </p>
-      </div>
-    </section>
 
     <!-- Footer -->
     <footer class="footer">
       <p style="font-size: 22px; color: var(--gold);">
         We look forward to your gracious presence
       </p>
-      <span>Kavya & Hariprakash - 2026</span>
+      <span>Kavya & Hariprakash</span>
     </footer>
 
   </div>
@@ -253,17 +246,30 @@ window.addEventListener("load", () => {
     }, 1000);
 
 
-    const music = document.getElementById("bg-music");
+const music = document.getElementById("bg-music");
 
-// Try autoplay
+// Try autoplay (muted first — allowed by browsers)
 window.addEventListener("load", () => {
-    music.play().catch(() => {});
+  music.muted = true;
+
+  music.play().then(() => {
+    // Unmute after a short delay
+    setTimeout(() => {
+      music.muted = false;
+    }, 1000);
+  }).catch(() => {
+    console.log("Autoplay blocked");
+  });
 });
 
-// Force play on first tap (mobile fix)
-document.addEventListener("touchstart", () => {
-    music.play();
-}, { once: true });
+// Fallback: first user interaction (mobile fix)
+const enableSound = () => {
+  music.muted = false;
+  music.play();
+};
+
+document.addEventListener("click", enableSound, { once: true });
+document.addEventListener("touchstart", enableSound, { once: true });
 
   </script>
 
